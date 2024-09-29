@@ -1,0 +1,25 @@
+[package]
+name = "jdkman"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+clap = { version = "4.3", features = ["derive"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+dirs = "5.0"
+rust-i18n = "1"
+sys-locale = "0.2"
+
+[target.'cfg(windows)'.dependencies]
+winreg = "0.10"
+winapi = { version = "0.3", features = ["winuser"] }
+
+[target.'cfg(target_os = "linux")'.dependencies]
+openssl = { version = "0.10", features = ["vendored"] }
+
+[profile.release]
+lto = true
+codegen-units = 1
+panic = 'abort'
+strip = true  # 这会移除调试符号，减小二进制文件的大小
